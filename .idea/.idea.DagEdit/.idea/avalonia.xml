@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="App.axaml" value="DagEdit.csproj" />
+        <entry key="Brushes.axaml" value="DagEdit.csproj" />
+        <entry key="BrushesAndColors.axaml" value="DagEdit.csproj" />
+        <entry key="Color.axaml" value="DagEdit.csproj" />
+        <entry key="Connector.axaml" value="DagEdit.csproj" />
+        <entry key="DagEditor.axaml" value="DagEdit.csproj" />
+        <entry key="MainWindow.axaml" value="DagEdit.csproj" />
+        <entry key="Node.axaml" value="DagEdit.csproj" />
+        <entry key="PendingConnection.axaml" value="DagEdit.csproj" />
+        <entry key="Styles.axaml" value="DagEdit.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
