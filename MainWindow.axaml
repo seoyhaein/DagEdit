@@ -4,6 +4,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="DagEdit.MainWindow"
-        Title="DagEdit">
-    Welcome to Avalonia!
+        Title="DagEdit"
+        xmlns:controls="using:DagEdit"
+        x:CompileBindings="True">
+    <Canvas x:Name="MainCanvas">
+        <controls:DagEditor x:Name="EditorTester" Width="800" Height="450"
+                            Canvas.Top="0" Canvas.Left="0">
+
+        </controls:DagEditor>
+    </Canvas>
 </Window>

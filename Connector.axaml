@@ -1,0 +1,27 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:DagEdit"
+        x:CompileBindings="True">
+    <Style Selector="controls|Connector">
+        <Setter Property="BorderBrush"
+                Value="DodgerBlue" />
+        <Setter Property="Foreground"
+                Value="White" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Fill"
+                Value="Red" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid>
+                    <Rectangle
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Stroke="{TemplateBinding BorderBrush}"
+                        Fill="{TemplateBinding Fill}"
+                        StrokeThickness="2" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

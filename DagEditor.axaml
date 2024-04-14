@@ -1,0 +1,58 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:DagEdit"
+        x:DataType="controls:Dag"
+        x:CompileBindings="True">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+            <controls:DagEditor />
+        </Border>
+    </Design.PreviewWith>
+    <Style Selector="controls|DagEditor">
+        <Setter Property="BorderBrush"
+                Value="DodgerBlue" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="BorderThickness"
+                Value="2" />
+        <Setter Property="ItemsSource"
+                Value="{Binding DAGItemsSource}" />
+        <Setter Property="PendingConnectionTemplate">
+            <DataTemplate>
+                <!-- RelativeSource 사용하는 것보다 성능상 이득이 있을 듯하다.-->
+                <controls:PendingConnection SourceAnchor="{Binding $parent[controls:DagEditor].SourceAnchor}"
+                                            TargetAnchor="{Binding $parent[controls:DagEditor].TargetAnchor}"
+                                            IsVisible="{Binding $parent[controls:DagEditor].IsVisiblePendingConnection}"
+                                            ViewportLocation="{Binding $parent[controls:DagEditor].ViewportLocation}" />
+            </DataTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <!-- TODO 생각해보기. -->
+                <!-- 아래 패딩 때문에 짤리는 부분이 있는 것 같지만 일단 지우지는 않는다. -->
+                <!-- SmallGridLinesBrush 를 지금은 최상위 Canvas 의 배경으로 집어 넣었는데 다른 곳에 넣을지 살펴본다. -->
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="10">
+                    <Canvas x:Name="PART_TopLayer" Background="{DynamicResource SmallGridLinesBrush}">
+                        <ItemsPresenter x:Name="PART_ItemsPresenter">
+                            <ItemsPresenter.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <controls:DagEditorCanvas x:Name="PART_ItemsHost"
+                                                              ViewportLocation="{TemplateBinding ViewportLocation}" />
+                                </ItemsPanelTemplate>
+                            </ItemsPresenter.ItemsPanel>
+                        </ItemsPresenter>
+                        <!-- TODO -->
+                        <!-- 여기서 Content 를 PendingConnection 으로 바인딩하게 하였지만 사실 이건 사용하지 않을 예정이다. 
+                                    외부확장을 위해서 넣어두었는데, 일단 구현 후 삭제할 예정임. -->
+                        <ContentPresenter ContentTemplate="{TemplateBinding PendingConnectionTemplate}"
+                                          Content="{TemplateBinding PendingConnection}" />
+                    </Canvas>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

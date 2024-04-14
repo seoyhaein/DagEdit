@@ -1,0 +1,59 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:DagEdit"
+        x:CompileBindings="True">
+
+    <Style Selector="controls|Node">
+        <Setter Property="Width"
+                Value="200" />
+        <Setter Property="Height"
+                Value="124" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid>
+                    <!-- 노드의 전체 컨테이너 -->
+                    <!--w / h 는 일단 이렇게 정해 놓는다.-->
+                    <!--양쪽 부분은 전체 사이즈의 1/15 w 사이즈로 한다.-->
+                    <Border
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        Background="#1c1b2b"
+                        CornerRadius="2"
+                        BorderBrush="#1c1b2b"
+                        BorderThickness="1">
+                        <Grid>
+                            <!-- 좌우 구획을 위한 컬럼 정의 -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="13*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <!-- 일단 값은 직접 넣는다. 향후 따로 뺀다. -->
+                            <!-- 구획 사이의 구분선 -->
+                            <Rectangle Grid.Column="1" Fill="Black" />
+
+                            <!-- 왼쪽 구획 -->
+                            <!--<Rectangle Grid.Column="0" Fill="#4d4d4d"/> -->
+                            <controls:TargetConnector Grid.Column="0"
+                                                      NodeId="{TemplateBinding Id}"
+                                                      Anchor="{TemplateBinding TargetAnchor}" />
+                            <!--<StackPanel Grid.Column="0">
+                                <TextBlock Text="Left Node" Foreground="WhiteSmoke" Margin="5" />
+                                ~1~ 왼쪽 포트들을 추가할 수 있음 @1@
+                            </StackPanel>-->
+
+                            <!-- 오른쪽 구획 -->
+                            <controls:SourceConnector Grid.Column="2"
+                                                      NodeId="{TemplateBinding Id}"
+                                                      Anchor="{TemplateBinding SourceAnchor}" />
+                            <!--<StackPanel Grid.Column="2">
+                                <TextBlock Text="Right Node" Foreground="WhiteSmoke" Margin="5"/>
+                                ~1~ 오른쪽 포트들을 추가할 수 있음 @1@
+                            </StackPanel>-->
+                        </Grid>
+                    </Border>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
