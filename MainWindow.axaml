@@ -10,7 +10,6 @@
     <Canvas x:Name="MainCanvas">
         <controls:DagEditor x:Name="EditorTester" Width="800" Height="450"
                             Canvas.Top="0" Canvas.Left="0">
-
         </controls:DagEditor>
     </Canvas>
 </Window>
