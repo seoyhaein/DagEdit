@@ -21,16 +21,16 @@ namespace DagEdit
             get => GetValue(ParentControlProperty);
             set => SetValue(ParentControlProperty, value);
         }
-
-        // TODO 중요. 아래 내용 잊지말자. 기존 Node(GUID) 와 StartNode(int type), EndNode(int type) 는 다른 ID 쳬계를 가져갈려고 한다. 
-        // Id 추가 BaseNode 에 않넣는 이유는 StartNode, EndNode 는 다른 ID 체계로 사용할려고 한다.
-        private Guid _id;
-
+        
         public static readonly DirectProperty<Node, Guid> IdProperty =
             AvaloniaProperty.RegisterDirect<Node, Guid>(
                 nameof(Id),
                 o => o.Id,
                 (o, v) => o.Id = v);
+
+        // TODO 중요. 아래 내용 잊지말자. 기존 Node(GUID) 와 StartNode(int type), EndNode(int type) 는 다른 ID 쳬계를 가져갈려고 한다. 
+        // Id 추가 BaseNode 에 않넣는 이유는 StartNode, EndNode 는 다른 ID 체계로 사용할려고 한다.
+        private Guid _id;
 
         public Guid Id
         {
@@ -44,27 +44,22 @@ namespace DagEdit
 
         // Node 의 움직임을 위해
         private readonly IDisposable _disposable;
-
-        // TODO TranslateTransform 다르게 구현하는 방식을 생각해보자. 시간날때 이렇게 하는거 좀 걸림.
-        private TranslateTransform _translateTransform = new TranslateTransform();
+        private readonly TranslateTransform _translateTransform = new TranslateTransform();
         private Point _initialPointerPosition; // 드래그 시작 시 마우스 포인터의 위치
         private Point _initialNodePosition; // 드래그 시작 시 노드의 위치
         private Point _temporaryNewPosition; // 노드의 임시 위치
         private Vector _dragAccumulator; // 드래그 동안의 누적 이동 거리
-
         // TODO 이름 조정
         private const int GridCellSize = 15; // 그리드 셀 크기, 필요에 따라 조정
 
         #endregion
 
         //TODO Node 삭제되는 것도 신경써야 한다.
-
         #region Constructor
 
         public Node()
         {
             Focusable = true;
-            // 초기 설정에서 TranslateTransform 객체를 RenderTransform으로 설정
             RenderTransform = _translateTransform;
             _disposable = ParentControlProperty.Changed.Subscribe(HandleParentControlChanged);
         }
@@ -170,8 +165,7 @@ namespace DagEdit
             RaiseConnectionChangedEvent(_id, this.Location, SourceAnchor, oldSourceAnchor, TargetAnchor,
                 oldTargetAnchor,
                 DagItemsType.RunnerNode);
-
-
+            
             args.Handled = true;
         }
 
@@ -189,34 +183,11 @@ namespace DagEdit
                 args.Handled = true;
             }
         }
-
-        /*protected override void HandleKeyDown(object? sender, KeyEventArgs args)
-        {
-            // TODO 현재 IsFocused 이 조건이 필요한지는 살펴봐야 함.
-            if (IsFocused)
-            {
-                var isMatch = EditorGestures.Delete.Matches(args);
-                if (isMatch)
-                {
-                    Debug.WriteLine("Match");
-                    args.Handled = true;
-                }
-            }
-
-
-        }*/
-
-        // TODO 향후 삭제 예정.
-        protected override void HandleLoaded(object? sender, RoutedEventArgs args)
-        {
-            // 테스트 메서드
-            // SetAnchor();
-        }
-
+        
         private void HandleParentControlChanged(AvaloniaPropertyChangedEventArgs e)
         {
             if (e.NewValue is DagEditorCanvas editorCanvas)
-                this.ParentControl = editorCanvas;
+                ParentControl = editorCanvas;
             else
                 ParentControl = this.GetParentVisualOfType<DagEditorCanvas>();
         }
@@ -286,21 +257,6 @@ namespace DagEdit
 
             return (sourceAnchor, targetAnchor);
         }
-
-        // TODO nullable 정리하자.
-        // 이거 버그 있음.
-        // FindAnchors 로 해도 될듯하다.
-        // 삭제 예정.
-        private (Point? updatedInAnchor, Point? updatedOutAnchor) UpdateAnchors(Point? inAnchor, Point? outAnchor,
-            Point finalPoint)
-        {
-            if (!inAnchor.HasValue || !outAnchor.HasValue)
-                return (null, null);
-
-            Point updatedInAnchor = new Point(inAnchor.Value.X + finalPoint.X, inAnchor.Value.Y + finalPoint.Y);
-            Point updatedOutAnchor = new Point(outAnchor.Value.X + finalPoint.X, outAnchor.Value.Y + finalPoint.Y);
-
-            return (updatedInAnchor, updatedOutAnchor);
-        }
+        
     }
 }
